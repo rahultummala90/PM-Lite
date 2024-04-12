@@ -21,7 +21,7 @@ const ProjectCard = ({ project, onEdit }: ProjectCardProps) => {
         <div className="section dark">
           <h5 className="strong">{project.name}</h5>
           <p>{formatDescription(project.description)}</p>
-          <p>Bidget: {project.budget.toLocaleString()}</p>
+          <p>Budget: {project.budget.toLocaleString()}</p>
           <button className="bordered" onClick={() => handleEditClick(project)}>
             <span className="icon-edit"></span>
             Edit
