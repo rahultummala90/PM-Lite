@@ -21,6 +21,9 @@ const ProjectForm = ({
 
   const handleSubmit = (event: SyntheticEvent) => {
     event.preventDefault();
+    if (isValid()) {
+      return;
+    }
     onSave(project);
   };
 
@@ -45,7 +48,19 @@ const ProjectForm = ({
   const validate = (project: Project) => {
     let errors: any = { name: "", description: "", budget: "" };
 
+    errors.name = project.name.length === 0 ? "Project name is required" : "";
+    errors.description =
+      project.description.length === 0 ? "Project description is required" : "";
+    errors.budget =
+      project.budget <= 0 ? "Project budget should be greater than zero" : "";
+
     return errors;
+  };
+
+  const isValid = () => {
+    return (
+      errors.name === "" && errors.description === "" && errors.budget === ""
+    );
   };
 
   return (
@@ -61,6 +76,11 @@ const ProjectForm = ({
             onChange={handleChange}
           />
         </div>
+        {errors.name.length > 0 && (
+          <div className="card error">
+            <p>{errors.name}</p>
+          </div>
+        )}
 
         <div>
           <label>Project Description</label>
@@ -71,6 +91,11 @@ const ProjectForm = ({
             onChange={handleChange}
           ></textarea>
         </div>
+        {errors.description.length > 0 && (
+          <div className="card error">
+            <p>{errors.description}</p>
+          </div>
+        )}
 
         <div>
           <label>Project Budget</label>
@@ -82,6 +107,11 @@ const ProjectForm = ({
             onChange={handleChange}
           />
         </div>
+        {errors.budget.length > 0 && (
+          <div className="card error">
+            <p>{errors.budget}</p>
+          </div>
+        )}
 
         <div>
           <label htmlFor="isActive">Is Active</label>
