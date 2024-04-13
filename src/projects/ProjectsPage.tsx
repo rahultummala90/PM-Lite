@@ -11,11 +11,20 @@ function ProjectsPage() {
   const [currentPage, setCurrentPage] = useState(1);
 
   const saveProject = (project: Project) => {
-    let updatedProjects = projects.map((currentProject: Project) => {
-      return currentProject.id === project.id ? project : currentProject;
-    });
+    projectAPI
+      .put(project)
+      .then((updatedProject) => {
+        let updatedProjects = projects.map((currentProject: Project) => {
+          return currentProject.id === project.id
+            ? new Project(updatedProject)
+            : currentProject;
+        });
 
-    setProjects(updatedProjects);
+        setProjects(updatedProjects);
+      })
+      .catch((e) => {
+        if (e instanceof Error) setError(e.message);
+      });
   };
 
   useEffect(() => {
@@ -23,8 +32,8 @@ function ProjectsPage() {
       setLoading(true);
       try {
         const data = await projectAPI.get(currentPage);
-        console.log([...projects, ...data]);
         setError("");
+
         if (currentPage === 1) {
           setProjects(data);
         } else {

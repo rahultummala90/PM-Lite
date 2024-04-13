@@ -21,7 +21,7 @@ const ProjectForm = ({
 
   const handleSubmit = (event: SyntheticEvent) => {
     event.preventDefault();
-    if (isValid()) {
+    if (!isValid()) {
       return;
     }
     onSave(project);

@@ -22,7 +22,7 @@ const ProjectList = ({ projects, onSave }: ProjectListProps) => {
   return (
     <div className="row">
       {projects.map((project) => (
-        <div>
+        <div key={project.id}>
           {project === projectEdit ? (
             <ProjectForm
               onCancel={cancelEdit}
